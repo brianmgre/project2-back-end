@@ -2,6 +2,10 @@
   "name": "front-and-back-project-back-end",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^1.18.9"
