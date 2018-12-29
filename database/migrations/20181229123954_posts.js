@@ -6,6 +6,14 @@ exports.up = function (knex, Promise) {
         posts
             .string('postText', 155)
             .notNullable()
+        posts
+            .string('tags');
+        posts
+            .integer('user_id')
+            .unsigned()
+            .references('id')
+            .inTable('users')
+            .notNullable();
     })
 };
 
