@@ -6,6 +6,7 @@ module.exports = server => {
     server.get('/api/posts', getPosts);
     server.post('/api/create', newPost);
     server.delete('/api/remove/:id', deletePost);
+    server.put('/api/edit/:id', editPost);
 }
 
 
@@ -45,5 +46,22 @@ function deletePost(req, res) {
         })
         .catch(err => {
             res.status(500).json(err)
+        });
+};
+
+function editPost(req, res) {
+    const { id } = req.params;
+    const { postText } = req.body;
+    db('posts')
+        .where({ id })
+        .first()
+        .update(req.body)
+        .then(post => {
+            post
+                ? res.status(200).json(req.body)
+                : res.status(404).json({ message: `post not found` })
+        })
+        .catch(err => {
+            res.status(500).json({ message: `error`, err })
         });
 };
