@@ -6,6 +6,7 @@ module.exports = server => {
     server.get('/api/posts', getPosts);
     server.get('/api/post/:id', postComments);
     server.post('/api/create', newPost);
+    server.post('/api/new/comment', newComment);
     server.delete('/api/remove/:id', deletePost);
     server.put('/api/edit/:id', editPost);
 }
@@ -91,4 +92,16 @@ function postComments(req, res) {
         .catch(err => {
             res.status(500).json(err);
         })
+};
+
+function newComment(req, res) {
+    const { comment, user_id, post_id } = req.body;
+    db('comments')
+        .insert(req.body)
+        .then(ids => {
+            res.status(201).json(ids)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        });
 };
