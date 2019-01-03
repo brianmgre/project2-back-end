@@ -4,6 +4,7 @@ const db = require('../database/dbConfig.js');
 
 module.exports = server => {
     server.get('/api/posts', getPosts);
+    server.get('/api/post/:id', postComments);
     server.post('/api/create', newPost);
     server.delete('/api/remove/:id', deletePost);
     server.put('/api/edit/:id', editPost);
@@ -64,4 +65,26 @@ function editPost(req, res) {
         .catch(err => {
             res.status(500).json({ message: `error`, err })
         });
+};
+
+function postComments(req, res) {
+    const { id } = req.params;
+    db('posts')
+        .where({ id })
+        .first()
+        .then(post => {
+            if (post) {
+                db('comments')
+                    .where({ post_id: id })
+                    .then(comment => {
+                        post.comment = comment
+                        res.status(200).json(post)
+                    })
+                    .catch(err => {
+                        res.status(422).json({ message: `id not found`, err })
+                    })
+            } else {
+                res.status(500).json(err)
+            }
+        })
 };
