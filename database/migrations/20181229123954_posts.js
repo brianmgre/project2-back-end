@@ -5,7 +5,7 @@ exports.up = function (knex, Promise) {
             .increments();
         posts
             .string('postText', 155)
-            .notNullable()
+            .notNullable();
         posts
             .string('tags');
         posts
