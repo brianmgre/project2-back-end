@@ -8,6 +8,7 @@ module.exports = server => {
     server.post('/api/create', newPost);
     server.post('/api/new/comment', newComment);
     server.delete('/api/remove/:id', deletePost);
+    server.delete('/api/comment/:id', deleteComment);
     server.put('/api/edit/:id', editPost);
 }
 
@@ -88,7 +89,6 @@ function postComments(req, res) {
                     .where({ post_id: id })
                     .then(comment => {
                         post.comment = comment
-                        console.log(post);
                         res.status(200).json(post)
                     })
                     .catch(err => {
@@ -111,6 +111,19 @@ function newComment(req, res) {
         .insert(req.body)
         .then(ids => {
             res.status(201).json(ids)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        });
+};
+
+function deleteComment(req, res) {
+    const { id } = req.params;
+    db('comments')
+        .where({ id })
+        .del()
+        .then(count => {
+            res.status(201).json(count)
         })
         .catch(err => {
             res.status(500).json(err)
