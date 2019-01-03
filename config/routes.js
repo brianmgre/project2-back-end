@@ -78,6 +78,7 @@ function postComments(req, res) {
                     .where({ post_id: id })
                     .then(comment => {
                         post.comment = comment
+                        console.log(post);
                         res.status(200).json(post)
                     })
                     .catch(err => {
@@ -86,5 +87,8 @@ function postComments(req, res) {
             } else {
                 res.status(500).json(err)
             }
+        })
+        .catch(err => {
+            res.status(500).json(err);
         })
 };
