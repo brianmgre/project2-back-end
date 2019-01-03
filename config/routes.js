@@ -11,6 +11,7 @@ module.exports = server => {
     server.put('/api/edit/:id', editPost);
 }
 
+//get posts
 
 function getPosts(req, res) {
     db('posts')
@@ -21,6 +22,8 @@ function getPosts(req, res) {
             res.status(500).json(err)
         })
 };
+
+//new post
 
 function newPost(req, res) {
     const { postText, user_id } = req.body;
@@ -38,6 +41,8 @@ function newPost(req, res) {
     };
 };
 
+//delete posts
+
 function deletePost(req, res) {
     const { id } = req.params;
     db('posts')
@@ -50,6 +55,8 @@ function deletePost(req, res) {
             res.status(500).json(err)
         });
 };
+
+//edit posts
 
 function editPost(req, res) {
     const { id } = req.params;
@@ -67,6 +74,8 @@ function editPost(req, res) {
             res.status(500).json({ message: `error`, err })
         });
 };
+
+//post and comments together
 
 function postComments(req, res) {
     const { id } = req.params;
@@ -93,6 +102,8 @@ function postComments(req, res) {
             res.status(500).json(err);
         })
 };
+
+//new comment
 
 function newComment(req, res) {
     const { comment, user_id, post_id } = req.body;
