@@ -129,3 +129,19 @@ function deleteComment(req, res) {
             res.status(500).json(err)
         });
 };
+
+function editComment(req, res) {
+    const { id } = req.params;
+    const { comment } = req.body;
+    db('comments')
+        .where({id })
+        .insert( req.body)
+        .then(comment => {
+            comment
+                ? res.status(201).json(req.body)
+                : res.status(404).json({message: `comment not found`})
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+};
