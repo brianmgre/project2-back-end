@@ -10,6 +10,7 @@ module.exports = server => {
     server.delete('/api/remove/:id', deletePost);
     server.delete('/api/comment/:id', deleteComment);
     server.put('/api/edit/:id', editPost);
+    server.put('/api/comment/:id', editComment );
 }
 
 //get posts
